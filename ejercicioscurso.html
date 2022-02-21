@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head> Formulario
+    <meta charset="utf-8">
+    <title>Creacion de formulario</title>
+    <link rel="stylesheet" href="new.css" type="text/css" media="all" />
+
+    <style type="text/css">
+    legend {
+        background-color: red;
+        color: white;
+    }
+    fieldset{
+        background-color: aqua;
+        }
+    input{
+        background-color: yellow;
+        
+        }
+    #botones1{
+           background-color:lightgrey;
+        }
+    #botones2{
+           background-color:palevioletred;
+            height: 50px;
+        }
+    </style>
+    
+    <script>
+
+        function mostrarDia() {
+            var dia = new Date(document.getElementById("fecha").value);
+            dia.setDate(dia.getDate() + 1);
+            var diaSemana = ["Domingo", "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
+            console.log(diaSemana)
+            var n = diaSemana[dia.getDay()];
+            document.getElementById("fecha").innerHTML = n;
+
+            alert("La fecha seleccionada es:" + n);
+        }
+        function mostrarCuenta(){
+            var value1 = document.getElementById("nCuentai").value
+            var value2 = document.getElementById("nCuentae").value
+            var value3 = document.getElementById("nCuentas").value
+            var value4 = document.getElementById("nCuentad").value
+            var value5 = document.getElementById("nCuentacc").value
+            var print = "Le informamos que su cuenta bancaria es: " + value + value1 + value2 + value3 + value4 + value5;
+            alert(print); 
+        }
+
+    </script>
+    
+
+</head>
+
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Datos Personales</legend>
+
+            <label>Nombre:
+                <input type="text" name="nombre" spellcheck="true" maxlength="30" />
+            </label>
+            <br />
+            <label>Apellidos:
+                <input type="text" name="apellido" spellcheck="true" maxlength="60" />
+            </label>
+            <br />
+            <label>Dirección:
+                <input type="text" name="direccion" spellcheck="true" maxlength="60" />
+            </label>
+            <br />
+            <label>Código Postal:
+                <input type="texto" name="cpostal" />
+                <button onclick="alert('¡Hola, señor!')">Saludar</button>
+            </label>
+            <br />
+            <label>Provincia:
+                <input type="texto" name="provincia" />
+            </label>
+
+
+        </fieldset>
+        
+        <br/>
+        <br/>
+        
+        <fieldset>
+            <legend>Tipo de contratación</legend>
+            <input type="radio" name="contrato" value="nuevo" checked="checked">Nueva contratación
+            <input type="radio" name="contrato" value="porta">Portabilidad
+            <input type="radio" name="contrato" value="cambio">Cambio de contrato
+            <br/>
+            <br/>
+            Elija la compañía actual:
+            <select name="origen">
+                <option value="movistar">Movistar</option>
+                <option value="orange">Orange</option>
+                <option value="vodafone">Vodafone</option>
+                <option value="yoigo">Yoigo</option>
+                <option value="nada">No tengo ninguna compañía</option>
+            </select>
+            En caso de nueva portabilidad elija la nueva compañía:
+            <select name="origen">
+                <option value="movistar">Movistar</option>
+                <option value="orange">Orange</option>
+                <option value="vodafone">Vodafone</option>
+                <option value="yoigo">Yoigo</option>
+            </select>
+        </fieldset>
+        <br/>
+        <fieldset>
+            <legend>Datos Bancarios</legend>
+            <label>País:
+                <input id= "nCuentap" type="text" name="pais" readonly="readonly" placeholder="ES"/>(sólo válido ES)
+            </label>
+            <br />
+            <label>Control IBAN:
+                <input id= "nCuentai"  type="text" name="iban" placeholder="XX" pattern="[0-9]{2}"/> (dos dígitos)
+            </label>
+            <br />
+            <label>Entidad:
+                <input id= "nCuentae" type="text" name="entidad" placeholder="XXXX" pattern="[0-9]{4}"/>(cuatro dígitos)
+            </label>
+            <br />
+            <label>Sucursal:
+                <input id= "nCuentas" type="texto" name="sucursal" placeholder="XXXX" pattern="[0-9]{4}"/> (cuatro dígitos)
+            </label>
+            <br />
+            <label>DC:
+                <input  id= "nCuentad" type="texto" name="dc" placeholder="XX" pattern="[0-9]{2}"/> (dos dígitos)
+            </label>
+            <br/>
+            <label>Cuenta:
+                <input id= "nCuentacc" type="texto" name="cuenta" placeholder="XXXXXXXXXX" pattern="[0-9]{10}"/> (diez dígitos)
+            </label>
+            
+        </fieldset>
+        <br/>
+        
+        <fieldset>
+            <legend>Datos Estadísticos - ¿Como nos conoció?</legend>
+            <input type="radio" name="televisión"/> A través de la TV
+            <br/>
+            <input type="radio" name="radio"/> A través de la radio
+            <br/>
+            <input type="radio" name="internet"/> A través de la Internet
+            <br/>
+            <input type="radio" name="otros"/> Otros
+            <br/>
+            <input type="range" id="rango" name="valoracion" min="1" max="5" value="1" min="1"max="5"/>Valoración [1-5]
+            <br/>
+            Fecha de la Encuestra
+            <input id="fecha" type="date" name="fecha" value="2019-01-01"/> Valoración [1-5]
+        </fieldset>
+        
+        <input id="botones1" type="submit" value="Enviar Datos" />
+        <input id="botones1" type="reset" value="Borrar Datos" /> 
+        <br/>
+        <button type="button" value="Mostrar Valoración" onclick="mostrarRango()" />Mostrar Valoración
+        <button type="button" value="Mostrar Día Semana" onclick="mostrarDia()" /> Mostrar Día de la semana
+        <button type="button" value="Mostrar Cuenta" onclick="mostrarCuenta()" /> Mostrar Cuenta
+    </form>
+</body>
+
+</html>
+
+nube:Drive:https://support.google.com/drive/answer/2424384?hl=es&co=GENIE.Platform%3DDesktopDropbox:https://help.dropbox.com/es-la/accounts-billing/create-delete/create-accountGithub:https://git-scm.com/book/es/v2/GitHub-Creaci%C3%B3n-y-configuraci%C3%B3n-de-la-cuenta#:~:text=Lo%20primero%20que%20necesitas%20es,%E2%80%9CSign%20up%20for%20GitHub%E2%80%9D.
