@@ -2,170 +2,285 @@
 
 <html>
 
-<head> Formulario
+<head>
     <meta charset="utf-8">
     <title>Creacion de formulario</title>
-    <link rel="stylesheet" href="new.css" type="text/css" media="all" />
 
     <style type="text/css">
-    legend {
-        background-color: red;
-        color: white;
-    }
-    fieldset{
-        background-color: aqua;
+        legend {
+            background-color: red;
+            color: white;
         }
-    input{
-        background-color: yellow;
-        
+
+        fieldset {
+            background-color: aqua;
         }
-    #botones1{
-           background-color:lightgrey;
+
+        input {
+            background-color: yellow;
+
         }
-    #botones2{
-           background-color:palevioletred;
+
+        #botones1 {
+            background-color: lightgrey;
+        }
+
+        #botones2 {
+            background-color: palevioletred;
             height: 50px;
         }
     </style>
-    
-    <script>
+</head>
 
+
+<body>
+    <div class="cont">
+        <form id="form">
+            <h1>Formulario Información Alta Telefónica</h1>
+            <fieldset>
+                <legend>Datos Personales</legend>
+
+                <label>Nombre:
+                    <input type="text" name="nombre" spellcheck="true" maxlength="30" />
+                </label>
+                <br />
+                <label>Apellidos:
+                    <input type="text" name="apellido" spellcheck="true" maxlength="60" />
+                </label>
+                <br />
+                <label>Dirección:
+                    <input type="text" name="direccion" spellcheck="true" maxlength="60" />
+                </label>
+                <br />
+                <label>Código Postal:
+                    <input type="texto" id="cpostal" maxlength="5" />
+                </label>
+                <br />
+                <label>Provincia:
+                    <input type="texto" id="provincia" />
+                </label>
+
+            </fieldset>
+
+            <br />
+            <br />
+
+            <fieldset>
+                <legend>Tipo de contratación</legend>
+                <input type="radio" name="contrato" value="nuevo" checked="checked">Nueva contratación
+                <input type="radio" name="contrato" value="porta">Portabilidad
+                <input type="radio" name="contrato" value="cambio">Cambio de contrato
+                <br />
+                <br />
+                Elija la compañía actual:
+                <select name="origen">
+                    <option value="movistar">Movistar</option>
+                    <option value="orange">Orange</option>
+                    <option value="vodafone">Vodafone</option>
+                    <option value="yoigo">Yoigo</option>
+                    <option value="nada">No tengo ninguna compañía</option>
+                </select>
+                En caso de nueva portabilidad elija la nueva compañía:
+                <select name="origen">
+                    <option value="movistar">Movistar</option>
+                    <option value="orange">Orange</option>
+                    <option value="vodafone">Vodafone</option>
+                    <option value="yoigo">Yoigo</option>
+                </select>
+            </fieldset>
+            <br />
+            <fieldset>
+                <legend>Datos Bancarios</legend>
+                <label>País:
+                    <input id="nCuentap" type="text" name="pais" readonly="readonly" placeholder="ES" />(sólo válido ES)
+                </label>
+                <br />
+                <label>Control IBAN:
+                    <input id="nCuentai" type="text" name="iban" placeholder="XX" pattern="[0-9]{2}" maxlength="2" /> (dos dígitos)
+                </label>
+                <br />
+                <label>Entidad:
+                    <input id="nCuentae" type="text" name="entidad" placeholder="XXXX" pattern="[0-9]{4}" maxlength="4" />(cuatro dígitos)
+                </label>
+                <br />
+                <label>Sucursal:
+                    <input id="nCuentas" type="texto" name="sucursal" placeholder="XXXX" pattern="[0-9]{4}" maxlength="4" /> (cuatro dígitos)
+                </label>
+                <br />
+                <label>DC:
+                    <input id="nCuentad" type="texto" name="dc" placeholder="XX" pattern="[0-9]{2}" maxlength="2" /> (dos dígitos)
+                </label>
+                <br />
+                <label>Cuenta:
+                    <input id="nCuentacc" type="texto" name="cuenta" placeholder="XXXXXXXXXX" pattern="[0-9]{10}" maxlength="10" /> (diez dígitos)
+                </label>
+
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>Datos Estadísticos - ¿Como nos conoció?</legend>
+                <input type="radio" name="televisión" /> A través de la TV
+                <br />
+                <input type="radio" name="radio" /> A través de la radio
+                <br />
+                <input type="radio" name="internet" /> A través de la Internet
+                <br />
+                <input type="radio" name="otros" /> Otros
+                <br />
+                <input type="range" id="rango" name="valoracion" min="1" max="5" value="1" min="1" max="5" />Valoración [1-5]
+                <br />
+                Fecha de la Encuestra
+                <input id="fecha" type="date" name="fecha" value="2019-01-01" /> Valoración [1-5]
+            </fieldset>
+
+            <input type="button" id="check" value="Enviar datos" onclick="validarCpProv()">
+            <button id="botones1" type="reset" value="Borrar Datos">Borrar datos </button>
+            <br />
+            <br />
+            <button type="button" value="Mostrar Valoración" onclick="mostrarRango()" />Mostrar Valoración
+            <button type="button" value="Mostrar Día Semana" onclick="mostrarDia()" /> Mostrar Día de la semana
+            <button type="button" value="Mostrar Cuenta" onclick="mostrarCuenta()" /> Mostrar Cuenta
+        </form>
+    </div>
+    <div class="resultadoProv">
+        <h3>La provincia indicada</h3>
+        <p id="resultadoProv"> </p>
+        <br>
+        <h3>Su código postal es</h3>
+        <h1 id="cod"></h1>
+    </div>
+
+    <script type="text/javascript">
         function mostrarDia() {
             var dia = new Date(document.getElementById("fecha").value);
             dia.setDate(dia.getDate() + 1);
-            var diaSemana = ["Domingo", "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"]
+            var diaSemana = ["Sábado", "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
             console.log(diaSemana)
             var n = diaSemana[dia.getDay()];
             document.getElementById("fecha").innerHTML = n;
 
             alert("La fecha seleccionada es:" + n);
         }
-        function mostrarCuenta(){
+
+        function mostrarRango() {
+            var valoración
+        }
+
+        function mostrarCuenta() {
             var value1 = document.getElementById("nCuentai").value
             var value2 = document.getElementById("nCuentae").value
             var value3 = document.getElementById("nCuentas").value
             var value4 = document.getElementById("nCuentad").value
             var value5 = document.getElementById("nCuentacc").value
-            var print = "Le informamos que su cuenta bancaria es: " + value + value1 + value2 + value3 + value4 + value5;
-            alert(print); 
+            var print = "Le informamos que su cuenta bancaria es: ES" + value1 + "-" + value2 + "-" + value3 + "-" + value4 + "-" + value5;
+            alert(print);
         }
 
+        function validarCpProv() {
+            var provincias = {
+                1: "Álava",
+                2: "Albacete",
+                3: "Alicante",
+                4: "Almería",
+                5: "Ávila",
+                6: "Badajoz",
+                7: "Baleares",
+                08: "Barcelona",
+                09: "Burgos",
+                10: "Cáceres",
+                11: "Cádiz",
+                12: "Castellón",
+                13: "Ciudad Real",
+                14: "Córdoba",
+                15: "Coruña",
+                16: "Cuenca",
+                17: "Gerona",
+                18: "Granada",
+                19: "Guadalajara",
+                20: "Guipúzcoa",
+                21: "Huelva",
+                22: "Huesca",
+                23: "Jaén",
+                24: "León",
+                25: "Lérida",
+                26: "La Rioja",
+                27: "Lugo",
+                28: "Madrid",
+                29: "Málaga",
+                30: "Murcia",
+                31: "Navarra",
+                32: "Orense",
+                33: "Asturias",
+                34: "Palencia",
+                35: "Las Palmas",
+                36: "Pontevedra",
+                37: "Salamanca",
+                38: "Santa Cruz de Tenerife",
+                39: "Cantabria",
+                40: "Segovia",
+                41: "Sevilla",
+                42: "Soria",
+                43: "Tarragona",
+                44: "Teruel",
+                45: "Toledo",
+                46: "Valencia",
+                47: "Valladolid",
+                48: "Vizcaya",
+                49: "Zamora",
+                50: "Zaragoza",
+                51: "Ceuta",
+                52: "Melilla"
+            };
+            var cpostal = document.getElementById("cpostal").value
+            var prov = document.getElementById('provincia').value;
+            var formulario = document.getElementById("form");
+            provincia = prov.toUpperCase();
+            pattern = new RegExp('^[A-Z]+$', 'i');
+
+            if (cpostal < 0 || cpostal > 52999 || isNaN(cpostal)) {
+                alert("Introduce un número correcto en el campo Código Postal");
+                formulario.reset();
+            } else if (cpostal == "" || cpostal == " ") {
+                alert("El número no puede quedar vacío o con espacios");
+                formulario.reset();
+            } else if (cpostal.length < 5) {
+                alert("El código postal debe tener 5 caracteres");
+                formulario.reset();
+            } else if (!pattern.test(provincia) || provincia.length < 1) {
+                alert("Introduce una Provincia.")
+                formulario.reset();
+            } else {
+                return provincias[parseInt(cpostal.substring(0, 2))];
+
+                if (provincia == provincias) {
+                    verde = document.createElement("h1");
+                    verde.textContent = provincia + '\n' + ' ES CORRECTA';
+                    verde.setAttribute("id", "verde")
+                    document.getElementById("resultadoProv").appendChild(verde);
+                    document.getElementById("verde").style.color = "#00e600";
+
+                } else {
+
+                    rojo = document.createElement("h3");
+                    rojo.textContent = provincia + '\n' + " ES ERRÓNEA";
+                    rojo.setAttribute("id", "rojo");
+                    document.getElementById("resultadoProv").appendChild(rojo);
+                    document.getElementById("rojo").style.color = "#ff0000";
+                }
+
+                formulario.reset();
+            }
+        }
+        var formulario = document.getElementById("form");
+        formulario.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("check").click();
+                formulario.reset();
+            }
+        });
     </script>
-    
-
-</head>
-
-
-<body>
-    <form>
-        <fieldset>
-            <legend>Datos Personales</legend>
-
-            <label>Nombre:
-                <input type="text" name="nombre" spellcheck="true" maxlength="30" />
-            </label>
-            <br />
-            <label>Apellidos:
-                <input type="text" name="apellido" spellcheck="true" maxlength="60" />
-            </label>
-            <br />
-            <label>Dirección:
-                <input type="text" name="direccion" spellcheck="true" maxlength="60" />
-            </label>
-            <br />
-            <label>Código Postal:
-                <input type="texto" name="cpostal" />
-                <button onclick="alert('¡Hola, señor!')">Saludar</button>
-            </label>
-            <br />
-            <label>Provincia:
-                <input type="texto" name="provincia" />
-            </label>
-
-
-        </fieldset>
-        
-        <br/>
-        <br/>
-        
-        <fieldset>
-            <legend>Tipo de contratación</legend>
-            <input type="radio" name="contrato" value="nuevo" checked="checked">Nueva contratación
-            <input type="radio" name="contrato" value="porta">Portabilidad
-            <input type="radio" name="contrato" value="cambio">Cambio de contrato
-            <br/>
-            <br/>
-            Elija la compañía actual:
-            <select name="origen">
-                <option value="movistar">Movistar</option>
-                <option value="orange">Orange</option>
-                <option value="vodafone">Vodafone</option>
-                <option value="yoigo">Yoigo</option>
-                <option value="nada">No tengo ninguna compañía</option>
-            </select>
-            En caso de nueva portabilidad elija la nueva compañía:
-            <select name="origen">
-                <option value="movistar">Movistar</option>
-                <option value="orange">Orange</option>
-                <option value="vodafone">Vodafone</option>
-                <option value="yoigo">Yoigo</option>
-            </select>
-        </fieldset>
-        <br/>
-        <fieldset>
-            <legend>Datos Bancarios</legend>
-            <label>País:
-                <input id= "nCuentap" type="text" name="pais" readonly="readonly" placeholder="ES"/>(sólo válido ES)
-            </label>
-            <br />
-            <label>Control IBAN:
-                <input id= "nCuentai"  type="text" name="iban" placeholder="XX" pattern="[0-9]{2}"/> (dos dígitos)
-            </label>
-            <br />
-            <label>Entidad:
-                <input id= "nCuentae" type="text" name="entidad" placeholder="XXXX" pattern="[0-9]{4}"/>(cuatro dígitos)
-            </label>
-            <br />
-            <label>Sucursal:
-                <input id= "nCuentas" type="texto" name="sucursal" placeholder="XXXX" pattern="[0-9]{4}"/> (cuatro dígitos)
-            </label>
-            <br />
-            <label>DC:
-                <input  id= "nCuentad" type="texto" name="dc" placeholder="XX" pattern="[0-9]{2}"/> (dos dígitos)
-            </label>
-            <br/>
-            <label>Cuenta:
-                <input id= "nCuentacc" type="texto" name="cuenta" placeholder="XXXXXXXXXX" pattern="[0-9]{10}"/> (diez dígitos)
-            </label>
-            
-        </fieldset>
-        <br/>
-        
-        <fieldset>
-            <legend>Datos Estadísticos - ¿Como nos conoció?</legend>
-            <input type="radio" name="televisión"/> A través de la TV
-            <br/>
-            <input type="radio" name="radio"/> A través de la radio
-            <br/>
-            <input type="radio" name="internet"/> A través de la Internet
-            <br/>
-            <input type="radio" name="otros"/> Otros
-            <br/>
-            <input type="range" id="rango" name="valoracion" min="1" max="5" value="1" min="1"max="5"/>Valoración [1-5]
-            <br/>
-            Fecha de la Encuestra
-            <input id="fecha" type="date" name="fecha" value="2019-01-01"/> Valoración [1-5]
-        </fieldset>
-        
-        <input id="botones1" type="submit" value="Enviar Datos" />
-        <input id="botones1" type="reset" value="Borrar Datos" /> 
-        <br/>
-        <button type="button" value="Mostrar Valoración" onclick="mostrarRango()" />Mostrar Valoración
-        <button type="button" value="Mostrar Día Semana" onclick="mostrarDia()" /> Mostrar Día de la semana
-        <button type="button" value="Mostrar Cuenta" onclick="mostrarCuenta()" /> Mostrar Cuenta
-    </form>
 </body>
 
 </html>
-
-nube:Drive:https://support.google.com/drive/answer/2424384?hl=es&co=GENIE.Platform%3DDesktopDropbox:https://help.dropbox.com/es-la/accounts-billing/create-delete/create-accountGithub:https://git-scm.com/book/es/v2/GitHub-Creaci%C3%B3n-y-configuraci%C3%B3n-de-la-cuenta#:~:text=Lo%20primero%20que%20necesitas%20es,%E2%80%9CSign%20up%20for%20GitHub%E2%80%9D.
